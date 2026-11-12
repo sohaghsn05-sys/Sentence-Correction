@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Correction of Sentence — Admission Practice</title>
+  <!-- Google Fonts: Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+          },
+          colors: {
+            obsidian: '#0a0a0f',
+            surface: '#111118',
+            card: '#161622',
+            accent: '#8b5cf6',
+            accentBright: '#a855f7',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* Custom scrollbar & subtle glassmorphism helpers */
+    body {
+      background-color: #0a0a0f;
+      color: #f3f4f6;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+    .glass-panel {
+      background: rgba(22, 22, 34, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(139, 92, 246, 0.18);
+    }
+    .glass-card-hover {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card-hover:hover {
+      border-color: rgba(168, 85, 247, 0.45);
+      box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.22);
+    }
+    .option-btn {
+      transition: all 0.18s ease;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(4px);
+      border-color: rgba(168, 85, 247, 0.6);
+      background: rgba(139, 92, 246, 0.12);
+    }
+    /* Hide scrollbar for horizontal filter pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in {
+      animation: fadeSlideUp 0.28s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#0a0a0f] text-gray-100 antialiased selection:bg-purple-600 selection:text-white">
+  <!-- Ambient Background Glow -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-purple-700/15 rounded-full blur-[130px]"></div>
+    <div class="absolute top-1/2 -right-32 w-96 h-96 bg-violet-600/10 rounded-full blur-[140px]"></div>
+  </div>
+
+  <!-- App Shell -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pb-20">
+    <!-- Top Sticky Header -->
+    <header class="sticky top-0 z-30 pt-4 pb-3 bg-[#0a0a0f]/85 backdrop-blur-xl border-b border-purple-500/15">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <!-- Brand & Subtitle -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-violet-800 flex items-center justify-center shadow-lg shadow-purple-600/25 border border-purple-400/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-base sm:text-lg font-extrabold tracking-tight text-white leading-tight">
+                Correction of Sentence <span class="text-purple-400 font-semibold">— Admission Practice</span>
+              </h1>
+              <p class="text-[11px] sm:text-xs text-gray-400 font-medium">
+                RETINA Guide Archive • DU, BUET, JnU, JU, RU, CU, KU &amp; BU
+              </p>
+            </div>
+          </div>
+
+          <!-- Compact Live Score Pill (Mobile) -->
+          <div class="flex md:hidden items-center gap-2 bg-[#161622] border border-purple-500/25 px-3 py-1.5 rounded-xl text-xs font-semibold">
+            <span class="text-emerald-400" id="mobileCorrectCount">0✓</span>
+            <span class="text-gray-600">|</span>
+            <span class="text-rose-400" id="mobileWrongCount">0✗</span>
+          </div>
+        </div>
+
+        <!-- Mode Switcher & Desktop Score Tracker -->
+        <div class="flex flex-wrap items-center justify-between md:justify-end gap-2">
+          <nav class="flex items-center bg-[#111118] p-1 rounded-xl border border-purple-500/20 w-full sm:w-auto overflow-x-auto no-scrollbar" aria-label="Study Modes">
+            <button data-mode="practice" class="mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-purple-600 text-white shadow-md shadow-purple-600/25 whitespace-nowrap">
+              Practice
+            </button>
+            <button data-mode="exam" class="mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition-all whitespace-nowrap">
+              Exam Mode
+            </button>
+            <button data-mode="review" class="mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition-all whitespace-nowrap flex items-center justify-center gap-1.5">
+              <span>Saved &amp; Mistakes</span>
+              <span id="reviewBadgeCount" class="px-1.5 py-0.2 bg-purple-500/20 text-purple-300 rounded-md text-[10px]">0</span>
+            </button>
+            <button data-mode="rules" class="mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition-all whitespace-nowrap">
+              Quick Rules
+            </button>
+          </nav>
+
+          <!-- Desktop Score Tracker -->
+          <div class="hidden md:flex items-center gap-3 glass-panel px-3.5 py-1.5 rounded-xl text-xs font-bold">
+            <div class="flex items-center gap-1 text-emerald-400" title="Correct Answers">
+              <span>✓</span><span id="desktopCorrectCount">0</span>
+            </div>
+            <div class="w-px h-3.5 bg-gray-700"></div>
+            <div class="flex items-center gap-1 text-rose-400" title="Wrong Answers">
+              <span>✗</span><span id="desktopWrongCount">0</span>
+            </div>
+            <div class="w-px h-3.5 bg-gray-700"></div>
+            <div class="text-purple-300" id="desktopAccuracy">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- University Filter Pills (Shown in Practice Mode) -->
+      <div id="filterBar" class="mt-3 pt-2.5 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5" id="uniFilterContainer">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Search & Question Jump -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1 sm:w-48">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search keyword or #Q..."
+              class="w-full bg-[#111118] border border-purple-500/20 focus:border-purple-500 rounded-xl pl-8 pr-3 py-1.5 text-xs text-gray-200 placeholder-gray-500 outline-none transition-colors"
+            />
+            <svg class="w-3.5 h-3.5 text-gray-500 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+            </svg>
+          </div>
+          <button id="resetProgressBtn" title="Reset Practice Progress" class="p-1.5 rounded-xl bg-[#111118] border border-white/10 hover:border-rose-500/40 text-gray-400 hover:text-rose-400 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Dynamic View Container -->
+    <main id="appContainer" class="mt-6">
+      <!-- Content injected via JS -->
+    </main>
+  </div>
+
+  <!-- Custom Toast Notification (No alert() used) -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300">
+    <div class="glass-panel border-purple-500/40 px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs font-semibold text-white">
+      <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+      <span id="toastMessage">Notification</span>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal (Replaces window.confirm) -->
+  <div id="confirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="glass-panel max-w-sm w-full p-6 rounded-2xl border border-purple-500/30 shadow-2xl animate-fade-in">
+      <h3 class="text-base font-bold text-white mb-2" id="confirmTitle">Confirm Action</h3>
+      <p class="text-xs text-gray-300 leading-relaxed mb-5" id="confirmBody">Are you sure?</p>
+      <div class="flex justify-end gap-2.5">
+        <button id="confirmCancelBtn" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-colors">
+          Cancel
+        </button>
+        <button id="confirmAcceptBtn" class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/25 transition-colors">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * =========================================================================
+     * CURATED RETINA GUIDE MCQ DATABASE (70 HIGH-YIELD QUESTIONS ACROSS ALL UNITS)
+     * Exact questions, university tags, and answer keys extracted from PDF.
+     * =========================================================================
+     */
+    const QUESTIONS_DB = [
+      // --- DU (Dhaka University: A, B, C, D Units) ---
+      {
+        id: 1,
+        bookNo: "01",
+        uni: "DU",
+        tag: "DU: 21-22, A",
+        question: "They could not help _____ the car on the road, where it had broken down.",
+        options: ["A. unless", "B. but", "C. than", "D. Instead of"],
+        answer: 1,
+        explanation: "'Cannot help but + base verb' (or 'cannot help + V-ing') is the standard idiomatic structure meaning unable to avoid doing something."
+      },
+      {
+        id: 2,
+        bookNo: "02",
+        uni: "DU",
+        tag: "DU: 21-22, A",
+        question: "_____ the rise in unemployment in cities, more and more people continue to move to urban centres.",
+        options: ["A. In addition to", "B. Despite", "C. Due to", "D. Even though"],
+        answer: 1,
+        explanation: "'Despite' is a preposition followed by a noun phrase ('the rise in unemployment') to show contrast. 'Even though' requires a full clause."
+      },
+      {
+        id: 3,
+        bookNo: "03",
+        uni: "DU",
+        tag: "DU: 21-22, A",
+        question: "_____ a taxi, we wouldn't have missed the train.",
+        options: ["A. If we took", "B. If we had taken", "C. If we take", "D. If we will take"],
+        answer: 1,
+        explanation: "Third Conditional structure: 'If + Past Perfect (had taken), subject + would/could/might + have + V3 (wouldn't have missed)'."
+      },
+      {
+        id: 4,
+        bookNo: "04",
+        uni: "DU",
+        tag: "DU: 21-22, A",
+        question: "She will be studying science, _____?",
+        options: ["A. isn't she", "B. will she not", "C. wouldn't she", "D. won't she"],
+        answer: 3,
+        explanation: "Tag question rule: For a positive statement with auxiliary 'will', the negative contracted tag is 'won't + pronoun'."
+      },
+      {
+        id: 5,
+        bookNo: "05",
+        uni: "DU",
+        tag: "DU: 20-21, A",
+        question: "_____ his alert and vigilant presence, all predatory animals were said to have been kept within bounds.",
+        options: ["A. Hence", "B. However", "C. In addition to", "D. Because of"],
+        answer: 3,
+        explanation: "'Because of' is a prepositional phrase showing cause before a noun phrase ('his alert and vigilant presence')."
+      },
+      {
+        id: 6,
+        bookNo: "06",
+        uni: "DU",
+        tag: "DU: 20-21, A",
+        question: "Complete the following sentence: \"If I had a car, _____\"",
+        options: [
+          "A. I took you to a long drive.",
+          "B. I would have been taken you to a long drive.",
+          "C. I would have taken you to a long drive.",
+          "D. I would take you to a long drive."
+        ],
+        answer: 3,
+        explanation: "Second Conditional: 'If + Simple Past (had), subject + would + base verb (take)'."
+      },
+      {
+        id: 7,
+        bookNo: "08",
+        uni: "DU",
+        tag: "DU: 17-18, A",
+        question: "Choose the correct sentence regarding punctuation:",
+        options: [
+          "A. He used the phrase you know so often that I finally said, No, I don't know.",
+          "B. He used the phrase \"you know\" so often that I finally said, No I don't know.",
+          "C. He used the phrase you know so often that I finally said, \"No, I don't know.\"",
+          "D. He used the phrase \"you know\" so often that I finally said, \"No, I don't know.\""
+        ],
+        answer: 3,
+        explanation: "Quoted phrases ('\"you know\"') and direct speech ('\"No, I don't know.\"') both require quotation marks, with a comma after introductory 'No'."
+      },
+      {
+        id: 8,
+        bookNo: "09",
+        uni: "DU",
+        tag: "DU: 16-17, A",
+        question: "Which sentence is grammatically correct?",
+        options: [
+          "A. Who do the book belongs to?",
+          "B. Who belongs to the book?",
+          "C. Who does the book belong to?",
+          "D. To whom does the book belong to?"
+        ],
+        answer: 2,
+        explanation: "Singular subject 'the book' takes 'does' + base verb 'belong'. Option D is redundant because it repeats 'to'."
+      },
+      {
+        id: 9,
+        bookNo: "10",
+        uni: "DU",
+        tag: "DU: 12-13, A",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. It is you who is to pay.",
+          "B. It is you who are to leave.",
+          "C. It is you who is late.",
+          "D. It is you who has won the prize."
+        ],
+        answer: 1,
+        explanation: "A relative pronoun ('who') takes a verb agreeing with its antecedent ('you' -> plural verb 'are')."
+      },
+      {
+        id: 10,
+        bookNo: "12",
+        uni: "DU",
+        tag: "DU: 12-13, A",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. The jury are arguing among themselves.",
+          "B. The jury is arguing among themselves.",
+          "C. The jury has argued among themselves.",
+          "D. The jury has been arguing among themselves."
+        ],
+        answer: 0,
+        explanation: "Collective nouns like 'jury' take a plural verb ('are') and plural pronoun ('themselves') when members act individually/dividedly."
+      },
+      {
+        id: 11,
+        bookNo: "15",
+        uni: "DU",
+        tag: "DU: 10-11, A",
+        question: "Identify the correct sentence:",
+        options: [
+          "A. One of the problems are extremely easy to solve.",
+          "B. One of the problem is extremely easy to solve.",
+          "C. One of the problems is extremely easy to solve.",
+          "D. One of the problem's are extremely easy to solve."
+        ],
+        answer: 2,
+        explanation: "'One of + plural noun (problems) + singular verb (is)'."
+      },
+      {
+        id: 12,
+        bookNo: "23",
+        uni: "DU",
+        tag: "DU: 08-09, A",
+        question: "No grammatical error occurs in:",
+        options: [
+          "A. I didn't eat since breakfast.",
+          "B. I wasn't eating since breakfast.",
+          "C. I hadn't been eating since breakfast.",
+          "D. I haven't eaten since breakfast."
+        ],
+        answer: 3,
+        explanation: "Actions starting in the past ('since breakfast') and continuing up to the present require Present Perfect ('haven't eaten')."
+      },
+      {
+        id: 13,
+        bookNo: "38",
+        uni: "DU",
+        tag: "DU: 04-05, A",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. More he gets, more he wants.",
+          "B. more he gets, the more he wants.",
+          "C. The more he gets, more he wants.",
+          "D. The more he gets, the more he wants."
+        ],
+        answer: 3,
+        explanation: "Double comparative parallel structure requires 'The + comparative..., the + comparative...'."
+      },
+      {
+        id: 14,
+        bookNo: "43",
+        uni: "DU",
+        tag: "DU: 21-22, B",
+        question: "Find the correct sentence:",
+        options: [
+          "A. I am committed to pursuing a career in management.",
+          "B. I am committed in pursuing a career in management.",
+          "C. I am committed for pursuing a career in management.",
+          "D. I am committed against pursuing a career in management."
+        ],
+        answer: 0,
+        explanation: "'Committed to' takes a gerund ('pursuing') because 'to' functions as a preposition here."
+      },
+      {
+        id: 15,
+        bookNo: "44",
+        uni: "DU",
+        tag: "DU: 21-22, C",
+        question: "Identify the correct sentence:",
+        options: [
+          "A. One of my friends is a lawyer",
+          "B. One of my friends are a lawyer",
+          "C. One of my friend is a lawyer",
+          "D. One of my friends are a lawyers"
+        ],
+        answer: 0,
+        explanation: "'One of my friends' (plural noun) requires a singular verb ('is')."
+      },
+      {
+        id: 16,
+        bookNo: "45",
+        uni: "DU",
+        tag: "DU: 18-19, D",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. No sooner had the police seen the thief than they started chasing him",
+          "B. No sooner had the police seen the thief then they started chasing him",
+          "C. No sooner had the police see the thief then they started chasing him",
+          "D. No sooner the police had seen the thief then they started chasing him"
+        ],
+        answer: 0,
+        explanation: "'No sooner had + subject + V3' is always paired with 'than' (not 'then')."
+      },
+      {
+        id: 17,
+        bookNo: "53",
+        uni: "DU",
+        tag: "DU: 14-15, D",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. I insist that she came along.",
+          "B. I insist that she comes along.",
+          "C. I insist that she come along.",
+          "D. I insist that she may come along."
+        ],
+        answer: 2,
+        explanation: "Present Subjunctive Mood: Verbs of demand/insistence ('insist that') are followed by the base form of the verb ('come') regardless of subject."
+      },
+      {
+        id: 18,
+        bookNo: "60",
+        uni: "DU",
+        tag: "DU: 13-14, D",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. Silver as well as cotton have fallen in price.",
+          "B. Bangla as well as English are taught here.",
+          "C. The mayor, with his councilors, is to be present.",
+          "D. The king, with his ministers, are going on a trip."
+        ],
+        answer: 2,
+        explanation: "When subjects are joined by 'with', 'together with', or 'as well as', the verb agrees with the first subject ('The mayor' -> singular 'is')."
+      },
+      {
+        id: 19,
+        bookNo: "62",
+        uni: "DU",
+        tag: "DU: 12-13, D",
+        question: "Neither Mr. Karim nor his friend _____",
+        options: [
+          "A. is invited to speak at the seminar.",
+          "B. are invited to speak at the seminar.",
+          "C. is to speak at the seminar.",
+          "D. are speaking at the seminar."
+        ],
+        answer: 0,
+        explanation: "In 'Neither... nor', the verb agrees with the nearest subject ('his friend' -> singular 'is invited')."
+      },
+      {
+        id: 20,
+        bookNo: "63",
+        uni: "DU",
+        tag: "DU: 12-13, D",
+        question: "Your courage is _____ in defending your country.",
+        options: [
+          "A. as great as any other person.",
+          "B. as great as any other persons.",
+          "C. great like other person.",
+          "D. as great as that of any other person."
+        ],
+        answer: 3,
+        explanation: "Logical comparison: Courage must be compared to the courage ('that of') of another person, not directly to the person."
+      },
+      {
+        id: 21,
+        bookNo: "67",
+        uni: "DU",
+        tag: "DU: 11-12, D",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. It is I who are responsible for this",
+          "B. It is I who am responsible for this",
+          "C. One of the boys are absent",
+          "D. The points is happy"
+        ],
+        answer: 1,
+        explanation: "The verb after 'who' agrees with its antecedent 'I', hence 'am'."
+      },
+      {
+        id: 22,
+        bookNo: "82",
+        uni: "DU",
+        tag: "DU: 00-01, D",
+        question: "Which of the following is correct?",
+        options: [
+          "A. Do you know where does he live?",
+          "B. Do you know where he lives?",
+          "C. Do you know where does he lives?",
+          "D. Do you know he lives where?"
+        ],
+        answer: 1,
+        explanation: "Embedded Question rule: Inside a larger question ('Do you know...'), the subordinate clause uses affirmative order ('where he lives'), not interrogative inversion."
+      },
+      {
+        id: 23,
+        bookNo: "87",
+        uni: "DU",
+        tag: "DU: 99-00, D",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. What is the time in your watch?",
+          "B. What is the time by your watch?",
+          "C. What is the time into your watch?",
+          "D. What is the time at your watch?"
+        ],
+        answer: 1,
+        explanation: "Fixed preposition idiom: Time according to a timepiece is always expressed with 'by' ('by your watch')."
+      },
+
+      // --- BUET ---
+      {
+        id: 24,
+        bookNo: "90",
+        uni: "BUET",
+        tag: "BUET: 20-21",
+        question: "Choose the correct sentence from the following:",
+        options: [
+          "A. Flying outside the window, he grabbed the papers",
+          "B. Flying out of the window, he grabbed the papers",
+          "C. Flying the window, the papers were grabbed him.",
+          "D. Flying out the window, the grabbed by him",
+          "E. Flying out of the window, the papers were grabbed by him."
+        ],
+        answer: 4,
+        explanation: "Dangling Modifier rule: The participial phrase 'Flying out of the window' must modify the subject immediately following the comma ('the papers', not 'he')."
+      },
+      {
+        id: 25,
+        bookNo: "91",
+        uni: "BUET",
+        tag: "BUET: 20-21",
+        question: "Complete the conditional sentence: \"If I had known he was in trouble, _____ helped.\"",
+        options: [
+          "A. I would",
+          "B. I would have",
+          "C. I should have",
+          "D. I should",
+          "E. I have had"
+        ],
+        answer: 1,
+        explanation: "Third Conditional: 'If + had + V3 (had known)' requires 'would have + V3 (would have helped)'."
+      },
+      {
+        id: 26,
+        bookNo: "93",
+        uni: "BUET",
+        tag: "BUET: 20-21",
+        question: "Identify the correct tag question for \"I am late\":",
+        options: [
+          "A. aren't I",
+          "B. is it",
+          "C. am not I",
+          "D. am I",
+          "E. am I not"
+        ],
+        answer: 0,
+        explanation: "Standard English tag question for positive 'I am' is 'aren't I?'."
+      },
+
+      // --- JnU (Jagannath University) ---
+      {
+        id: 27,
+        bookNo: "94",
+        uni: "JnU",
+        tag: "JnU: 17-18, A",
+        question: "Find out the correct sentence:",
+        options: [
+          "A. Government office remains closed on Friday.",
+          "B. Government offices remains closed on Friday.",
+          "C. Government offices remain closed on Fridays.",
+          "D. Government office remains closed on Fridays."
+        ],
+        answer: 2,
+        explanation: "General recurring habits/schedules use plural countable nouns ('Government offices') with plural verb ('remain') and 'on Fridays'."
+      },
+      {
+        id: 28,
+        bookNo: "97",
+        uni: "JnU",
+        tag: "JnU: 17-18, D",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. The matter was informed to the police.",
+          "B. The police were informed of the matter.",
+          "C. The matter had been informed to the police.",
+          "D. The police was informed of the matter."
+        ],
+        answer: 1,
+        explanation: "'Police' is always plural ('were'), and the idiom is 'inform someone of something' (not 'inform something to someone')."
+      },
+      {
+        id: 29,
+        bookNo: "100",
+        uni: "JnU",
+        tag: "JnU: 15-16, B",
+        question: "Select the correct sentence:",
+        options: [
+          "A. The jury was unanimous in its decision.",
+          "B. The jury was unanimous in their decision.",
+          "C. The jury were unanimous in the decision.",
+          "D. The jury were unanimous in its decision."
+        ],
+        answer: 0,
+        explanation: "Because the jury is 'unanimous' (acting as one single body), it takes a singular verb ('was') and singular pronoun ('its')."
+      },
+      {
+        id: 30,
+        bookNo: "102",
+        uni: "JnU",
+        tag: "JnU: 15-16, E",
+        question: "Select the correct sentence:",
+        options: [
+          "A. If I should have realized the danger in this work, I would not have asked you to undertake it.",
+          "B. If I realized the danger in this work, I would not have asked you to undertake it.",
+          "C. If I had realized the danger in this work, I would not have asked you to undertake it.",
+          "D. When I realized the danger in this work, I would not have asked you to undertake it."
+        ],
+        answer: 2,
+        explanation: "Past unreal conditional: 'If + had realized' pairs with 'would not have asked'."
+      },
+      {
+        id: 31,
+        bookNo: "117",
+        uni: "JnU",
+        tag: "JnU: 12-13, D",
+        question: "Which one of the following sentences is correct?",
+        options: [
+          "A. Rintu was hanged for murder.",
+          "B. Rintu was hung for murder.",
+          "C. Rintu is hung for murder.",
+          "D. Rintu is being hanging for murder."
+        ],
+        answer: 0,
+        explanation: "Execution by hanging takes the past participle 'hanged'; objects/pictures are 'hung'."
+      },
+      {
+        id: 32,
+        bookNo: "120",
+        uni: "JnU",
+        tag: "JnU: 11-12, B",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. In spite the delay, he arrived on time.",
+          "B. In spite the delay, he arrived at time.",
+          "C. In spite of the delay, he arrived on time.",
+          "D. Despite of the delay, he arrived in time."
+        ],
+        answer: 2,
+        explanation: "'In spite of' requires 'of', whereas 'Despite' never takes 'of'. 'On time' means punctual."
+      },
+      {
+        id: 33,
+        bookNo: "127",
+        uni: "JnU",
+        tag: "JnU: 11-12, D",
+        question: "Choose the right sentence:",
+        options: [
+          "A. He is senior than me.",
+          "B. He is senior from me.",
+          "C. He is senior to me.",
+          "D. He is senior of me."
+        ],
+        answer: 2,
+        explanation: "Latin comparatives ending in -ior (senior, junior, superior, inferior, prior) take 'to' instead of 'than'."
+      },
+      {
+        id: 34,
+        bookNo: "143",
+        uni: "JnU",
+        tag: "JnU: 07-08, C",
+        question: "The correct sentence is:",
+        options: [
+          "A. I forbade him from go.",
+          "B. I forbade him to go.",
+          "C. I forbade him going.",
+          "D. I forbade him not to go."
+        ],
+        answer: 1,
+        explanation: "'Forbid' is followed by 'object + infinitive (to go)' without 'not' (since forbid is already negative)."
+      },
+
+      // --- JU (Jahangirnagar University) ---
+      {
+        id: 35,
+        bookNo: "149",
+        uni: "JU",
+        tag: "JU (H; Set-A): 20-21",
+        question: "Find out the correct sentence:",
+        options: [
+          "A. It is raining from morning",
+          "B. It has been drizzling since morning",
+          "C. It has been raining from morning",
+          "D. It is drizzling since morning"
+        ],
+        answer: 1,
+        explanation: "Present Perfect Continuous ('has been drizzling') is used with 'since + point of time (morning)'."
+      },
+      {
+        id: 36,
+        bookNo: "153",
+        uni: "JU",
+        tag: "JU: 18-19, B",
+        question: "Which one of the following sentences is correct?",
+        options: [
+          "A. Your accent is not as strong as my mother's",
+          "B. Your accent is not as strong as my mother",
+          "C. Your accent is not strong as my mother",
+          "D. Your accent is not strong than my mother's"
+        ],
+        answer: 0,
+        explanation: "Parallel comparison: 'Your accent' must be compared to 'my mother's [accent]' using 'as... as'."
+      },
+      {
+        id: 37,
+        bookNo: "161",
+        uni: "JU",
+        tag: "JU: 14-15, C",
+        question: "Which sentence is correct?",
+        options: [
+          "A. Having finished the assignment, the TV was turned on.",
+          "B. After reading the original study, the article remains unconvincing.",
+          "C. Relieved of your responsibilities at work, your home should be a place to relax.",
+          "D. Having finished the assignment, I turned on the TV."
+        ],
+        answer: 3,
+        explanation: "Only option D avoids a dangling modifier because 'I' is the logical agent who finished the assignment."
+      },
+      {
+        id: 38,
+        bookNo: "164",
+        uni: "JU",
+        tag: "JU: 13-14, A7",
+        question: "Which one of the following sentences is correct?",
+        options: [
+          "A. He has resigned from his post.",
+          "B. He has resigned his post.",
+          "C. He has resigned in his post.",
+          "D. He has resigned into his post."
+        ],
+        answer: 1,
+        explanation: "In standard formal usage (and RETINA key), 'resign' acts as a transitive verb directly taking 'his post' without a preposition."
+      },
+      {
+        id: 39,
+        bookNo: "167",
+        uni: "JU",
+        tag: "JU: 11-12, IBA",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. The factory workers were ready, able, and were quite determined to do a great job.",
+          "B. The computer network is safer, stronger, and more secure.",
+          "C. Martin felt the movie was boring, silly, and was too long.",
+          "D. In counselling, I think both talking and to listen are important."
+        ],
+        answer: 1,
+        explanation: "Parallelism rule: Three comparative adjectives ('safer, stronger, and more secure') match cleanly in grammatical form."
+      },
+
+      // --- RU (Rajshahi University) ---
+      {
+        id: 40,
+        bookNo: "172",
+        uni: "RU",
+        tag: "RU, C: 20-21",
+        question: "None is happy in this world, _____? The tag question is:",
+        options: [
+          "A. are they?",
+          "B. is one?",
+          "C. is it?",
+          "D. isn't it?"
+        ],
+        answer: 0,
+        explanation: "Indefinite pronouns like 'None', 'Nobody', 'Everyone' take the plural pronoun 'they' in tag questions; since 'None' is negative, the tag is positive ('are they?')."
+      },
+      {
+        id: 41,
+        bookNo: "173",
+        uni: "RU",
+        tag: "RU, C: 20-21",
+        question: "Which one is the most polite expression?",
+        options: [
+          "A. Please close the door.",
+          "B. Will you please close the door?",
+          "C. Would you mind closing the door?",
+          "D. May the door be closed?"
+        ],
+        answer: 2,
+        explanation: "'Would you mind + V-ing' is considered the most polite formal request structure in English."
+      },
+      {
+        id: 42,
+        bookNo: "175",
+        uni: "RU",
+        tag: "RU, C: 20-21",
+        question: "Which one is the correct sentence?",
+        options: [
+          "A. Whom do you think wrote to me yesterday?",
+          "B. Who do you think wrote to me yesterday?",
+          "C. Who do you think has wrote to me yesterday?",
+          "D. Who did you think wrote to me yesterday?"
+        ],
+        answer: 1,
+        explanation: "Parenthetical clause ('do you think') does not affect the case of the subject pronoun 'Who', which is the subject of 'wrote'."
+      },
+      {
+        id: 43,
+        bookNo: "178",
+        uni: "RU",
+        tag: "RU: 18-19, A",
+        question: "Which one is the correct sentence?",
+        options: [
+          "A. You didn't use to swimming, did you?",
+          "B. You usen't to swim, do you?",
+          "C. You aren't used to swimming, did you?",
+          "D. You aren't used to swimming, are you?"
+        ],
+        answer: 3,
+        explanation: "'Be used to + V-ing' expresses familiarity; its tag question uses the auxiliary 'are' ('are you?')."
+      },
+      {
+        id: 44,
+        bookNo: "182",
+        uni: "RU",
+        tag: "RU: 18-19, A",
+        question: "Which one is the correct sentence?",
+        options: [
+          "A. Two hours is a long time.",
+          "B. Two hour is a long time.",
+          "C. Two hours are a long time.",
+          "D. Two hours are long time."
+        ],
+        answer: 0,
+        explanation: "Units of time, distance, or money considered as a single whole take a singular verb ('is')."
+      },
+      {
+        id: 45,
+        bookNo: "189",
+        uni: "RU",
+        tag: "RU: 17-18, A",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. He insisted my going there",
+          "B. He insisted me to go there",
+          "C. He insisted for my going there",
+          "D. He insisted on my going there"
+        ],
+        answer: 3,
+        explanation: "'Insist' takes the preposition 'on' followed by a possessive pronoun ('my') + gerund ('going')."
+      },
+      {
+        id: 46,
+        bookNo: "203",
+        uni: "RU",
+        tag: "RU: 15-16, E",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. He is too important for tolerating any delay.",
+          "B. He is too important at tolerating any delay.",
+          "C. He is too important to tolerating any delay.",
+          "D. He is too important to tolerate any delay."
+        ],
+        answer: 3,
+        explanation: "Correlative structure: 'too + adjective + to + base verb (infinitive)'."
+      },
+      {
+        id: 47,
+        bookNo: "206",
+        uni: "RU",
+        tag: "RU: 15-16, I",
+        question: "Which is the correct sentence?",
+        options: [
+          "A. Let he and I go",
+          "B. Let I and He go",
+          "C. Let me and he go",
+          "D. Let him and me go"
+        ],
+        answer: 3,
+        explanation: "After the verb 'Let', pronouns must be in the objective case ('him and me')."
+      },
+      {
+        id: 48,
+        bookNo: "207",
+        uni: "RU",
+        tag: "RU: 15-16, H",
+        question: "Which one is correct?",
+        options: [
+          "A. I look forward in seeing you.",
+          "B. I look forward to seeing you.",
+          "C. I look forward for seeing you.",
+          "D. I look forward to see you."
+        ],
+        answer: 1,
+        explanation: "'Look forward to' ends with a preposition 'to', so it must be followed by a gerund ('seeing')."
+      },
+      {
+        id: 49,
+        bookNo: "229",
+        uni: "RU",
+        tag: "RU: 11-12, D",
+        question: "Identify the correct sentence:",
+        options: [
+          "A. It is imperative that you are on time.",
+          "B. It is imperative that you are timely.",
+          "C. It is imperative that you be on time.",
+          "D. It is imperative that you are in time."
+        ],
+        answer: 2,
+        explanation: "Subjunctive mood after 'It is imperative that...' requires the bare infinitive ('be')."
+      },
+      {
+        id: 50,
+        bookNo: "234",
+        uni: "RU",
+        tag: "RU: 10-11, Unit-A",
+        question: "কোন বাক্যটি শুদ্ধ (Which sentence is correct)?",
+        options: [
+          "A. He has many furniture.",
+          "B. He has many furnitures.",
+          "C. He has many pieces of furniture.",
+          "D. He has many piece furniture."
+        ],
+        answer: 2,
+        explanation: "'Furniture' is an uncountable noun; to count it, use 'pieces of furniture'."
+      },
+      {
+        id: 51,
+        bookNo: "244",
+        uni: "RU",
+        tag: "RU: 09-10, Unit-D",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. I prefer death from dishonor",
+          "B. I prefer death than dishonor",
+          "C. I prefer death to dishonor",
+          "D. I prefer death against dishonor"
+        ],
+        answer: 2,
+        explanation: "The verb 'prefer' always takes the preposition 'to' when comparing two nouns/gerunds."
+      },
+
+      // --- CU (Chittagong University) ---
+      {
+        id: 52,
+        bookNo: "248",
+        uni: "CU",
+        tag: "CU (A; Set-1): 20-21",
+        question: "The facilities of the new covid hospital _____",
+        options: [
+          "A. is as good or better then the old hospital.",
+          "B. are as good or better than the old hospital",
+          "C. are as good as or better than those of the old hospitals",
+          "D. are as good or better than those of the old hospital"
+        ],
+        answer: 2,
+        explanation: "Plural subject 'facilities' requires 'are', complete 'as good as', and 'those of' for logical comparison."
+      },
+      {
+        id: 53,
+        bookNo: "249",
+        uni: "CU",
+        tag: "CU (A; Set-2): 20-21",
+        question: "The correct sentence is:",
+        options: [
+          "A. She took pictures and, I did so",
+          "B. She took pictures and, I did also",
+          "C. She took pictures, and I did",
+          "D. She took pictures, and so did I"
+        ],
+        answer: 3,
+        explanation: "Affirmative agreement uses inverted 'so + auxiliary + subject' ('and so did I')."
+      },
+      {
+        id: 54,
+        bookNo: "255",
+        uni: "CU",
+        tag: "CU (A; Set-3): 20-21",
+        question: "My neighbour didn't hesitate to cooperate with the pandemic affected people, and _____.",
+        options: [
+          "A. So I did",
+          "B. So did I",
+          "C. neither did I",
+          "D. I didn't neither"
+        ],
+        answer: 2,
+        explanation: "Negative agreement uses inverted 'neither + auxiliary + subject' ('neither did I')."
+      },
+      {
+        id: 55,
+        bookNo: "272",
+        uni: "CU",
+        tag: "CU: 13-14, F",
+        question: "Which one is correct?",
+        options: [
+          "A. Ten miles are too far to walk.",
+          "B. Ten miles is too far to walk.",
+          "C. The mile is too far to walk.",
+          "D. Ten miles have too far to walk."
+        ],
+        answer: 1,
+        explanation: "A plural distance ('Ten miles') acting as a single unit takes a singular verb ('is')."
+      },
+      {
+        id: 56,
+        bookNo: "274",
+        uni: "CU",
+        tag: "CU: 13-14, D",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. It's about time we leave; it's nearly midnight.",
+          "B. It's about time we left; it's nearly midnight.",
+          "C. It's about time we have left; it's nearly midnight.",
+          "D. It's about time we shall leave; it's nearly midnight."
+        ],
+        answer: 1,
+        explanation: "'It is time / It is high time / It is about time + subject' is followed by the Simple Past ('left') to express urgency."
+      },
+      {
+        id: 57,
+        bookNo: "284",
+        uni: "CU",
+        tag: "CU: 11-12, D",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. Walking in the park, he was bitten by a snake",
+          "B. Walking in the park, a snake bit him",
+          "C. Walking in the park, he bit snake",
+          "D. Walking in the park, a snake was bit him"
+        ],
+        answer: 0,
+        explanation: "Passive construction puts 'he' right after 'Walking in the park,' so the modifier logically describes him, not the snake."
+      },
+      {
+        id: 58,
+        bookNo: "286",
+        uni: "CU",
+        tag: "CU: 10-11, B",
+        question: "Which of the following is correct?",
+        options: [
+          "A. He doesn't need wait for me.",
+          "B. He doesn't need waiting for me.",
+          "C. He need not to wait for me.",
+          "D. He is not need to wait for me.",
+          "E. He need not wait for me."
+        ],
+        answer: 4,
+        explanation: "When 'need' is used as a semi-modal in negative ('need not'), it is followed directly by the bare infinitive ('wait') without 'to'."
+      },
+      {
+        id: 59,
+        bookNo: "287",
+        uni: "CU",
+        tag: "CU: 10-11, B",
+        question: "The assignment of Monday is to write a _____ about your home town.",
+        options: [
+          "A. five hundred word composition.",
+          "B. five hundred words composition.",
+          "C. five hundred word compositions.",
+          "D. five hundreds word composition."
+        ],
+        answer: 0,
+        explanation: "Hyphenated/compound modifiers before a noun ('five hundred word') stay singular."
+      },
+      {
+        id: 60,
+        bookNo: "314",
+        uni: "CU",
+        tag: "CU: 04-05, D",
+        question: "Identify the correct sentence:",
+        options: [
+          "A. Opening the book, the pages were torn.",
+          "B. Opening the book, the pages had been torn.",
+          "C. I am opening the book, the pages torn.",
+          "D. Opening the book, I noticed that the pages were torn."
+        ],
+        answer: 3,
+        explanation: "Avoid dangling participle: 'I' opened the book, so 'I' must be the subject of the main clause."
+      },
+
+      // --- KU (Khulna University) ---
+      {
+        id: 61,
+        bookNo: "368",
+        uni: "KU",
+        tag: "KU: 18-19, B",
+        question: "Which of the following sentences is correct?",
+        options: [
+          "A. He was hung for murder.",
+          "B. He was hanged for murder.",
+          "C. He was hunged for murder.",
+          "D. He had been hunged for murder."
+        ],
+        answer: 1,
+        explanation: "'Hanged' is the past participle of hang when referring to capital punishment."
+      },
+      {
+        id: 62,
+        bookNo: "369",
+        uni: "KU",
+        tag: "KU: 18-19, B",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. The man was addicted to gamble.",
+          "B. The man was addicted in gamble.",
+          "C. The man was addicted to gambling.",
+          "D. The man was addicted to gambleing."
+        ],
+        answer: 2,
+        explanation: "'Addicted to' takes a noun or gerund ('gambling')."
+      },
+      {
+        id: 63,
+        bookNo: "370",
+        uni: "KU",
+        tag: "KU: 18-19, A",
+        question: "Choose the correct sentence:",
+        options: [
+          "A. We have many works to do in summer.",
+          "B. We have much works to do in summer.",
+          "C. We have a lot of works to do in summer.",
+          "D. We have a lot of work to do in summer."
+        ],
+        answer: 3,
+        explanation: "'Work' (meaning labor/tasks) is uncountable, so it cannot be pluralized as 'works' here; use 'a lot of work'."
+      },
+      {
+        id: 64,
+        bookNo: "384",
+        uni: "KU",
+        tag: "KU: 13-14, A",
+        question: "Which one is correct?",
+        options: [
+          "A. Unless he does not read attentively, he will fail.",
+          "B. I shall wait until you do not come.",
+          "C. Study hard lest you fail.",
+          "D. He hardly comes here."
+        ],
+        answer: 3,
+        explanation: "'Unless' and 'until' already carry negative meaning (cannot take 'not'); 'lest' takes 'should'; 'He hardly comes here' is completely grammatical."
+      },
+      {
+        id: 65,
+        bookNo: "393",
+        uni: "KU",
+        tag: "KU: 11-12",
+        question: "Which is the correct simple sentence?",
+        options: [
+          "A. The sun rose and the fog dispersed.",
+          "B. The fog being dispersed, the sun rose.",
+          "C. When the sun rose, the fog dispersed.",
+          "D. The sun having risen, the fog dispersed."
+        ],
+        answer: 3,
+        explanation: "Nominative Absolute construction ('The sun having risen') forms a grammatically accurate simple sentence with one finite verb ('dispersed')."
+      },
+
+      // --- BU (Barishal University) ---
+      {
+        id: 66,
+        bookNo: "458",
+        uni: "BU",
+        tag: "BU: 15-16, Unit-A",
+        question: "Which one is correct?",
+        options: [
+          "A. You, he and I were present in the class.",
+          "B. You, he and I was present in the class.",
+          "C. I, you and he were present in the class.",
+          "D. He, you and I was present in the class."
+        ],
+        answer: 0,
+        explanation: "Pronoun order rule (231): For positive/neutral statements, place 2nd person ('You'), 3rd person ('he'), and 1st person ('I') with plural verb ('were')."
+      },
+      {
+        id: 67,
+        bookNo: "461",
+        uni: "BU",
+        tag: "BU: 15-16, B",
+        question: "Which one is incorrect?",
+        options: [
+          "A. The dog lost its bone.",
+          "B. It's a matter of great urgency.",
+          "C. It's a shame you can't come.",
+          "D. The dog lost it's bone."
+        ],
+        answer: 3,
+        explanation: "Possessive determiner is 'its' (no apostrophe). 'It's' is a contraction for 'It is' or 'It has'."
+      },
+      {
+        id: 68,
+        bookNo: "465",
+        uni: "BU",
+        tag: "BU: 15-16, D",
+        question: "Which sentence is correct?",
+        options: [
+          "A. Never I have seen such a mess.",
+          "B. Neither such a mess I have seen.",
+          "C. Neither a mess I have seen.",
+          "D. Never have I seen such a mess."
+        ],
+        answer: 3,
+        explanation: "Negative Adverb Inversion: Starting a sentence with 'Never' requires auxiliary inversion ('Never have I seen...')."
+      },
+      {
+        id: 69,
+        bookNo: "468",
+        uni: "BU",
+        tag: "BU: 14-15, C",
+        question: "Find out the correct sentence:",
+        options: [
+          "A. Where does she live, do you know?",
+          "B. Do you know where does she live?",
+          "C. Do you know where she lives?",
+          "D. Do you know she lives where?"
+        ],
+        answer: 2,
+        explanation: "Embedded wh-clause inside a question keeps subject-verb order ('where she lives')."
+      },
+      {
+        id: 70,
+        bookNo: "488",
+        uni: "BU",
+        tag: "BU: 12-13, A",
+        question: "Find the correct sentence:",
+        options: [
+          "A. He has said that what is right.",
+          "B. He has said which that is right.",
+          "C. What he has said is right.",
+          "D. What has he said is right."
+        ],
+        answer: 2,
+        explanation: "Nominal relative clause ('What he has said') acts as a singular subject followed by 'is right'."
+      }
+    ];
+
+    /**
+     * =========================================================================
+     * GRAMMAR CHEAT-SHEET DATA (SUMMARIZED FROM THE RETINA GUIDE PDF)
+     * =========================================================================
+     */
+    const GRAMMAR_RULES = [
+      {
+        category: "Subject-Verb Agreement",
+        badge: "High Frequency",
+        rules: [
+          {
+            title: "One of / Each of / Neither of",
+            desc: "Always followed by a PLURAL noun/pronoun, but takes a SINGULAR verb.",
+            example: "One of the problems is extremely easy to solve. [DU 10-11]"
+          },
+          {
+            title: "Neither... nor / Either... or",
+            desc: "The verb agrees with the subject closest to it.",
+            example: "Neither Mr. Karim nor his friend is invited to speak. [DU 12-13]"
+          },
+          {
+            title: "With / Along with / As well as",
+            desc: "Parenthetical additions do not change the number of the main (first) subject.",
+            example: "The mayor, with his councilors, is to be present. [DU 13-14]"
+          },
+          {
+            title: "Collective Nouns (Jury, Committee, Family)",
+            desc: "Singular verb when acting unanimously as one unit; plural verb when members act individually.",
+            example: "The jury was unanimous in its decision. [JnU 15-16] / The jury are arguing among themselves. [DU 12-13]"
+          }
+        ]
+      },
+      {
+        category: "Conditionals & Subjunctive Mood",
+        badge: "Core Exam Trap",
+        rules: [
+          {
+            title: "Second Conditional (Unreal Present)",
+            desc: "If + Simple Past (or 'were') → would / could / might + Base Verb.",
+            example: "If I had a car, I would take you to a long drive. [DU 20-21]"
+          },
+          {
+            title: "Third Conditional (Unreal Past)",
+            desc: "If + Past Perfect (had + V3) → would / could / might + have + V3.",
+            example: "If we had taken a taxi, we wouldn't have missed the train. [DU 21-22]"
+          },
+          {
+            title: "Present Subjunctive (Mandative)",
+            desc: "After verbs/adjectives of urgency (insist, urge, imperative, urgent) + that, always use the bare infinitive (base verb).",
+            example: "I insist that she come along. [DU 14-15] / It is imperative that you be on time. [RU 11-12]"
+          },
+          {
+            title: "It is high time / It is about time",
+            desc: "Followed by Subject + Simple Past tense to indicate overdue action.",
+            example: "It's about time we left; it's nearly midnight. [CU 13-14]"
+          }
+        ]
+      },
+      {
+        category: "Gerund vs. Infinitive",
+        badge: "Must Memorize",
+        rules: [
+          {
+            title: "Prepositional 'to' + Gerund (V-ing)",
+            desc: "Phrases ending in preposition 'to' require V-ing: look forward to, committed to, addicted to, be used to, with a view to.",
+            example: "I am committed to pursuing a career in management. [DU 21-22]"
+          },
+          {
+            title: "Cannot help / Feel like / Stop",
+            desc: "Followed directly by a Gerund (V-ing) or 'cannot help but + V1'.",
+            example: "I can't help laughing. [RU 14-15] / The wind stopped blowing. [JnU 12-13]"
+          },
+          {
+            title: "Causative & Bare Infinitives",
+            desc: "Let / make / help (active) + object + base verb. Note: 'need not' also takes base verb without 'to'.",
+            example: "Let him and me go. [RU 15-16] / He need not wait for me. [CU 10-11]"
+          }
+        ]
+      },
+      {
+        category: "Dangling Modifiers & Parallelism",
+        badge: "BUET / IBA Favorite",
+        rules: [
+          {
+            title: "Dangling Participle Rule",
+            desc: "An introductory participial phrase (-ing / -ed) must logically describe the subject immediately following the comma.",
+            example: "Flying out of the window, the papers were grabbed by him. [BUET 20-21]"
+          },
+          {
+            title: "Logical Comparison (that of / those of)",
+            desc: "Compare like with like. Do not compare a quality or object directly to a person or place.",
+            example: "Your courage is as great as that of any other person. [DU 12-13]"
+          },
+          {
+            title: "Double Comparatives",
+            desc: "Both clauses must start with 'The + comparative adjective/adverb'.",
+            example: "The more he gets, the more he wants. [DU 04-05]"
+          }
+        ]
+      },
+      {
+        category: "Fixed Prepositions & Inversion",
+        badge: "Quick Marks",
+        rules: [
+          {
+            title: "Latin Comparatives (-ior) & Prefer",
+            desc: "Senior, junior, superior, inferior, prior, and prefer take 'to' (never 'than').",
+            example: "He is senior to me. [JnU 11-12] / I prefer death to dishonor. [RU 09-10]"
+          },
+          {
+            title: "Negative Inversion & No Sooner",
+            desc: "Starting with Never, Hardly, Rarely, or No sooner requires auxiliary inversion before the subject.",
+            example: "No sooner had the police seen the thief than they started chasing him. [DU 18-19]"
+          },
+          {
+            title: "Embedded Questions",
+            desc: "Wh-clauses inside a question follow statement word order (Subject + Verb), not question inversion.",
+            example: "Do you know where he lives? [DU 00-01]"
+          }
+        ]
+      }
+    ];
+
+    /**
+     * =========================================================================
+     * APPLICATION STATE & LOCALSTORAGE PERSISTENCE
+     * =========================================================================
+     */
+    const STORAGE_KEY = "retina_sentence_correction_state_v1";
+
+    const defaultState = {
+      mode: "practice", // 'practice' | 'exam' | 'review' | 'rules'
+      selectedUni: "ALL",
+      searchQuery: "",
+      currentPage: 1,
+      itemsPerPage: 10,
+      answered: {}, // { [questionId]: { selected: number, isCorrect: boolean } }
+      bookmarks: [], // [questionId, ...]
+      mistakes: [], // [questionId, ...]
+      exam: {
+        active: false,
+        finished: false,
+        questions: [],
+        answers: {}, // { [index]: optionIndex }
+        timeLeft: 15 * 60, // 15 minutes for 20 questions
+        negativeMarking: true,
+        timerInterval: null
+      }
+    };
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        const parsed = JSON.parse(raw);
+        return {
+          ...structuredClone(defaultState),
+          answered: parsed.answered || {},
+          bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks : [],
+          mistakes: Array.isArray(parsed.mistakes) ? parsed.mistakes : [],
+        };
+      } catch (err) {
+        console.error("Failed to load state:", err);
+        return structuredClone(defaultState);
+      }
+    }
+
+    function saveState() {
+      try {
+        const payload = {
+          answered: state.answered,
+          bookmarks: state.bookmarks,
+          mistakes: state.mistakes,
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (err) {
+        console.error("Failed to save state:", err);
+      }
+    }
+
+    /**
+     * =========================================================================
+     * UI HELPERS (TOAST & CUSTOM CONFIRM MODAL)
+     * =========================================================================
+     */
+    let toastTimeout = null;
+    function showToast(msg) {
+      const box = document.getElementById("toastBox");
+      const text = document.getElementById("toastMessage");
+      text.textContent = msg;
+      box.classList.remove("opacity-0", "translate-y-3");
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        box.classList.add("opacity-0", "translate-y-3");
+      }, 2400);
+    }
+
+    function showConfirm(title, body, onConfirm) {
+      const modal = document.getElementById("confirmModal");
+      document.getElementById("confirmTitle").textContent = title;
+      document.getElementById("confirmBody").textContent = body;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      const cancelBtn = document.getElementById("confirmCancelBtn");
+      const acceptBtn = document.getElementById("confirmAcceptBtn");
+
+      const cleanup = () => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        cancelBtn.onclick = null;
+        acceptBtn.onclick = null;
+      };
+
+      cancelBtn.onclick = cleanup;
+      acceptBtn.onclick = () => {
+        cleanup();
+        onConfirm();
+      };
+    }
+
+    /**
+     * =========================================================================
+     * HEADER METRICS & FILTER BAR RENDERING
+     * =========================================================================
+     */
+    const UNIVERSITIES = ["ALL", "DU", "BUET", "JnU", "JU", "RU", "CU", "KU", "BU"];
+
+    function updateHeaderStats() {
+      const entries = Object.values(state.answered);
+      const correct = entries.filter((e) => e.isCorrect).length;
+      const wrong = entries.filter((e) => !e.isCorrect).length;
+      const total = correct + wrong;
+      const accuracy = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+      document.getElementById("desktopCorrectCount").textContent = correct;
+      document.getElementById("desktopWrongCount").textContent = wrong;
+      document.getElementById("desktopAccuracy").textContent = `${accuracy}%`;
+
+      document.getElementById("mobileCorrectCount").textContent = `${correct}✓`;
+      document.getElementById("mobileWrongCount").textContent = `${wrong}✗`;
+
+      const reviewSet = new Set([...state.bookmarks, ...state.mistakes]);
+      document.getElementById("reviewBadgeCount").textContent = reviewSet.size;
+    }
+
+    function renderUniFilters() {
+      const container = document.getElementById("uniFilterContainer");
+      container.innerHTML = UNIVERSITIES.map((uni) => {
+        const count =
+          uni === "ALL"
+            ? QUESTIONS_DB.length
+            : QUESTIONS_DB.filter((q) => q.uni === uni).length;
+        const isActive = state.selectedUni === uni;
+        return `
+          <button
+            onclick="selectUniversity('${uni}')"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 border ${
+              isActive
+                ? "bg-purple-600/25 border-purple-500 text-purple-200 shadow-sm shadow-purple-500/20"
+                : "bg-[#111118] border-white/10 text-gray-400 hover:text-white hover:border-purple-500/30"
+            }"
+          >
+            <span>${uni === "ALL" ? "All Units" : uni}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-md ${
+              isActive ? "bg-purple-500 text-white" : "bg-white/5 text-gray-400"
+            }">${count}</span>
+          </button>
+        `;
+      }).join("");
+    }
+
+    function updateModeTabs() {
+      document.querySelectorAll(".mode-tab").forEach((btn) => {
+        const isMatch = btn.dataset.mode === state.mode;
+        if (isMatch) {
+          btn.className =
+            "mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-purple-600 text-white shadow-md shadow-purple-600/25 whitespace-nowrap flex items-center justify-center gap-1.5";
+        } else {
+          btn.className =
+            "mode-tab flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition-all whitespace-nowrap flex items-center justify-center gap-1.5";
+        }
+      });
+
+      const filterBar = document.getElementById("filterBar");
+      if (state.mode === "practice") {
+        filterBar.classList.remove("hidden");
+      } else {
+        filterBar.classList.add("hidden");
+      }
+    }
+
+    /**
+     * =========================================================================
+     * QUESTION CARD COMPONENT (REUSED IN PRACTICE & REVIEW TABS)
+     * =========================================================================
+     */
+    function buildQuestionCardHTML(q, displayIndex) {
+      const userAnswer = state.answered[q.id];
+      const isBookmarked = state.bookmarks.includes(q.id);
+      const isMistake = state.mistakes.includes(q.id);
+
+      const optionsHTML = q.options
+        .map((optText, idx) => {
+          let btnClasses =
+            "option-btn w-full text-left px-4 py-3 rounded-xl border text-xs sm:text-sm font-medium flex items-center justify-between gap-3 ";
+          let statusIcon = "";
+
+          if (!userAnswer) {
+            btnClasses += "bg-[#111118]/90 border-white/10 text-gray-200 cursor-pointer";
+          } else {
+            const isCorrectOpt = idx === q.answer;
+            const isSelectedOpt = idx === userAnswer.selected;
+
+            if (isCorrectOpt) {
+              btnClasses += "bg-emerald-500/15 border-emerald-500/70 text-emerald-200 font-semibold";
+              statusIcon = `<span class="shrink-0 w-5 h-5 rounded-full bg-emerald-500 text-black flex items-center justify-center text-xs font-extrabold">✓</span>`;
+            } else if (isSelectedOpt && !userAnswer.isCorrect) {
+              btnClasses += "bg-rose-500/15 border-rose-500/70 text-rose-200";
+              statusIcon = `<span class="shrink-0 w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center text-xs font-extrabold">✗</span>`;
+            } else {
+              btnClasses += "bg-[#111118]/40 border-white/5 text-gray-500 opacity-70";
+            }
+          }
+
+          return `
+            <button
+              type="button"
+              ${userAnswer ? "disabled" : `onclick="handlePracticeAnswer(${q.id}, ${idx})"`}
+              class="${btnClasses}"
+            >
+              <span>${optText}</span>
+              ${statusIcon}
+            </button>
+          `;
+        })
+        .join("");
+
+      const explanationHTML = userAnswer
+        ? `
+          <div class="mt-4 p-4 rounded-xl bg-purple-950/35 border border-purple-500/30 animate-fade-in">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider ${
+                userAnswer.isCorrect ? "text-emerald-400" : "text-purple-300"
+              }">
+                ${userAnswer.isCorrect ? "Correct! Grammar Rule:" : "Explanation & Grammar Rule:"}
+              </span>
+            </div>
+            <p class="text-xs sm:text-[13px] text-gray-200 leading-relaxed">${q.explanation}</p>
+          </div>
+        `
+        : "";
+
+      return `
+        <article class="glass-panel glass-card-hover rounded-2xl p-5 sm:p-6 animate-fade-in" id="q-card-${q.id}">
+          <!-- Card Top Metadata -->
+          <div class="flex items-center justify-between gap-2 mb-3.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-purple-600/20 border border-purple-500/30 text-purple-300 text-[11px] font-extrabold">
+                #${q.bookNo}
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-[11px] font-semibold">
+                [${q.tag}]
+              </span>
+              ${
+                isMistake
+                  ? `<span class="px-2 py-0.5 rounded-md bg-rose-500/15 border border-rose-500/30 text-rose-300 text-[10px] font-bold">Needs Review</span>`
+                  : ""
+              }
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              ${
+                userAnswer
+                  ? `<button onclick="retrySingleQuestion(${q.id})" title="Try this question again" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white text-[11px] font-semibold transition-colors">
+                      Retry
+                    </button>`
+                  : ""
+              }
+              <button
+                onclick="toggleBookmark(${q.id})"
+                title="${isBookmarked ? "Remove Bookmark" : "Bookmark Question"}"
+                class="p-2 rounded-xl border transition-all ${
+                  isBookmarked
+                    ? "bg-amber-500/20 border-amber-500/50 text-amber-300"
+                    : "bg-white/5 border-white/10 text-gray-400 hover:text-amber-300"
+                }"
+              >
+                <svg class="w-4 h-4" fill="${isBookmarked ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Question Stem -->
+          <h2 class="text-sm sm:text-base font-bold text-white leading-snug mb-4">
+            ${q.question}
+          </h2>
+
+          <!-- Options Grid -->
+          <div class="grid grid-cols-1 gap-2.5">
+            ${optionsHTML}
+          </div>
+
+          <!-- Instant Feedback Explanation -->
+          ${explanationHTML}
+        </article>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * VIEW 1: PRACTICE MODE
+     * =========================================================================
+     */
+    function getFilteredQuestions() {
+      return QUESTIONS_DB.filter((q) => {
+        const matchesUni = state.selectedUni === "ALL" || q.uni === state.selectedUni;
+        const query = state.searchQuery.trim().toLowerCase();
+        if (!query) return matchesUni;
+        const cleanQuery = query.replace(/^#/, "");
+        return (
+          matchesUni &&
+          (q.question.toLowerCase().includes(query) ||
+            q.tag.toLowerCase().includes(query) ||
+            q.bookNo.toLowerCase().includes(cleanQuery) ||
+            q.options.some((o) => o.toLowerCase().includes(query)))
+        );
+      });
+    }
+
+    function renderPracticeMode() {
+      const container = document.getElementById("appContainer");
+      const filtered = getFilteredQuestions();
+      const totalPages = Math.max(1, Math.ceil(filtered.length / state.itemsPerPage));
+      if (state.currentPage > totalPages) state.currentPage = totalPages;
+
+      const startIdx = (state.currentPage - 1) * state.itemsPerPage;
+      const pageItems = filtered.slice(startIdx, startIdx + state.itemsPerPage);
+
+      // Progress bar for current filter
+      const answeredInFilter = filtered.filter((q) => state.answered[q.id]).length;
+      const pct = filtered.length > 0 ? Math.round((answeredInFilter / filtered.length) * 100) : 0;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel rounded-2xl p-10 text-center">
+            <p class="text-base font-bold text-white mb-1">No matching questions found</p>
+            <p class="text-xs text-gray-400 mb-4">Try clearing your search keyword or switching to "All Units".</p>
+            <button onclick="clearFilters()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-colors">
+              Reset Filters
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const cardsHTML = pageItems.map((q, i) => buildQuestionCardHTML(q, startIdx + i + 1)).join("");
+
+      container.innerHTML = `
+        <!-- Progress Overview Bar -->
+        <div class="glass-panel rounded-2xl p-4 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex-1">
+            <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+              <span class="text-gray-300">
+                ${state.selectedUni === "ALL" ? "All Universities" : state.selectedUni + " Question Bank"} Progress
+              </span>
+              <span class="text-purple-300 font-bold">${answeredInFilter} / ${filtered.length} Solved (${pct}%)</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-purple-600 to-fuchsia-500 rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+            </div>
+          </div>
+          <div class="text-[11px] text-gray-400 font-medium sm:text-right">
+            Showing <span class="text-white font-bold">${startIdx + 1}-${Math.min(startIdx + state.itemsPerPage, filtered.length)}</span> of ${filtered.length}
+          </div>
+        </div>
+
+        <!-- Question List -->
+        <div class="space-y-4">
+          ${cardsHTML}
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="mt-7 flex items-center justify-between glass-panel p-3.5 rounded-2xl">
+          <button
+            onclick="changePage(${state.currentPage - 1})"
+            ${state.currentPage === 1 ? "disabled" : ""}
+            class="px-4 py-2 rounded-xl text-xs font-bold border border-white/10 transition-colors ${
+              state.currentPage === 1
+                ? "opacity-40 cursor-not-allowed text-gray-500"
+                : "bg-white/5 hover:bg-purple-600/25 hover:border-purple-500/40 text-white"
+            }"
+          >
+            ← Previous
+          </button>
+
+          <div class="flex items-center gap-1.5">
+            ${Array.from({ length: totalPages }, (_, i) => i + 1)
+              .map(
+                (p) => `
+                <button
+                  onclick="changePage(${p})"
+                  class="w-8 h-8 rounded-xl text-xs font-bold transition-all ${
+                    p === state.currentPage
+                      ? "bg-purple-600 text-white shadow-md shadow-purple-600/30"
+                      : "bg-white/5 text-gray-400 hover:text-white"
+                  }"
+                >
+                  ${p}
+                </button>
+              `
+              )
+              .join("")}
+          </div>
+
+          <button
+            onclick="changePage(${state.currentPage + 1})"
+            ${state.currentPage === totalPages ? "disabled" : ""}
+            class="px-4 py-2 rounded-xl text-xs font-bold border border-white/10 transition-colors ${
+              state.currentPage === totalPages
+                ? "opacity-40 cursor-not-allowed text-gray-500"
+                : "bg-white/5 hover:bg-purple-600/25 hover:border-purple-500/40 text-white"
+            }"
+          >
+            Next →
+          </button>
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * VIEW 2: TIMED EXAM MODE (20 RANDOMIZED QUESTIONS + NEGATIVE MARKING)
+     * =========================================================================
+     */
+    function startExam() {
+      const shuffled = [...QUESTIONS_DB].sort(() => Math.random() - 0.5).slice(0, 20);
+      state.exam.active = true;
+      state.exam.finished = false;
+      state.exam.questions = shuffled;
+      state.exam.answers = {};
+      state.exam.timeLeft = 15 * 60; // 15 mins
+
+      clearInterval(state.exam.timerInterval);
+      state.exam.timerInterval = setInterval(() => {
+        if (!state.exam.active || state.exam.finished) {
+          clearInterval(state.exam.timerInterval);
+          return;
+        }
+        state.exam.timeLeft--;
+        const timerEl = document.getElementById("examTimerDisplay");
+        if (timerEl) {
+          timerEl.textContent = formatTime(state.exam.timeLeft);
+          if (state.exam.timeLeft <= 60) {
+            timerEl.classList.add("text-rose-400", "animate-pulse");
+          }
+        }
+        if (state.exam.timeLeft <= 0) {
+          submitExam(true);
+        }
+      }, 1000);
+
+      renderExamMode();
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function selectExamOption(qIdx, optIdx) {
+      if (state.exam.finished) return;
+      state.exam.answers[qIdx] = optIdx;
+      renderExamMode();
+    }
+
+    function toggleNegativeMarking() {
+      state.exam.negativeMarking = !state.exam.negativeMarking;
+      renderExamMode();
+    }
+
+    function submitExam(auto = false) {
+      clearInterval(state.exam.timerInterval);
+      state.exam.finished = true;
+
+      // Also log wrong answers into mistakes tracker for study review
+      state.exam.questions.forEach((q, idx) => {
+        const chosen = state.exam.answers[idx];
+        if (chosen !== undefined && chosen !== q.answer) {
+          if (!state.mistakes.includes(q.id)) {
+            state.mistakes.push(q.id);
+          }
+        }
+      });
+      saveState();
+      updateHeaderStats();
+      if (auto) showToast("Time's up! Exam submitted automatically.");
+      renderExamMode();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderExamMode() {
+      const container = document.getElementById("appContainer");
+
+      // Pre-exam Lobby Screen
+      if (!state.exam.active) {
+        container.innerHTML = `
+          <div class="glass-panel rounded-3xl p-6 sm:p-10 max-w-2xl mx-auto text-center animate-fade-in border-purple-500/30">
+            <div class="w-14 h-14 rounded-2xl bg-purple-600/20 border border-purple-500/40 text-purple-300 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-2">Admission Mock Exam</h2>
+            <p class="text-xs sm:text-sm text-gray-400 max-w-md mx-auto mb-6 leading-relaxed">
+              Simulate real DU, BUET, RU, JU &amp; CU admission test pressure with 20 randomized sentence correction MCQs and a 15-minute countdown.
+            </p>
+
+            <div class="grid grid-cols-3 gap-3 max-w-md mx-auto mb-6">
+              <div class="bg-[#111118] border border-white/10 p-3 rounded-2xl">
+                <div class="text-lg font-extrabold text-white">20</div>
+                <div class="text-[11px] text-gray-400 font-medium">Questions</div>
+              </div>
+              <div class="bg-[#111118] border border-white/10 p-3 rounded-2xl">
+                <div class="text-lg font-extrabold text-purple-400">15:00</div>
+                <div class="text-[11px] text-gray-400 font-medium">Minutes</div>
+              </div>
+              <div class="bg-[#111118] border border-white/10 p-3 rounded-2xl">
+                <div class="text-lg font-extrabold text-rose-400">${state.exam.negativeMarking ? "-0.25" : "0.00"}</div>
+                <div class="text-[11px] text-gray-400 font-medium">Wrong Penalty</div>
+              </div>
+            </div>
+
+            <!-- Negative Marking Toggle -->
+            <div class="flex items-center justify-center gap-3 mb-7">
+              <span class="text-xs font-semibold text-gray-300">Standard BD Negative Marking (-0.25):</span>
+              <button
+                onclick="toggleNegativeMarking()"
+                class="w-12 h-6 rounded-full p-1 transition-colors ${
+                  state.exam.negativeMarking ? "bg-purple-600" : "bg-gray-700"
+                }"
+              >
+                <div class="w-4 h-4 rounded-full bg-white transition-transform ${
+                  state.exam.negativeMarking ? "translate-x-6" : "translate-x-0"
+                }"></div>
+              </button>
+            </div>
+
+            <button
+              onclick="startExam()"
+              class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white text-sm font-extrabold shadow-xl shadow-purple-600/30 transition-all"
+            >
+              Start Mock Exam Now
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      // Post-Exam Results & Breakdown Screen
+      if (state.exam.finished) {
+        let correct = 0;
+        let wrong = 0;
+        let skipped = 0;
+
+        state.exam.questions.forEach((q, idx) => {
+          const chosen = state.exam.answers[idx];
+          if (chosen === undefined) skipped++;
+          else if (chosen === q.answer) correct++;
+          else wrong++;
+        });
+
+        const penalty = state.exam.negativeMarking ? wrong * 0.25 : 0;
+        const netScore = Math.max(0, correct - penalty).toFixed(2);
+
+        const reviewCards = state.exam.questions
+          .map((q, idx) => {
+            const chosen = state.exam.answers[idx];
+            const isCorrect = chosen === q.answer;
+            const statusBadge =
+              chosen === undefined
+                ? `<span class="px-2.5 py-0.5 rounded-md bg-gray-700/60 text-gray-300 text-[10px] font-bold">Skipped</span>`
+                : isCorrect
+                ? `<span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">+1.00 Correct</span>`
+                : `<span class="px-2.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 text-[10px] font-bold">${
+                    state.exam.negativeMarking ? "-0.25 Wrong" : "Wrong"
+                  }</span>`;
+
+            return `
+              <div class="glass-panel rounded-2xl p-5 border ${
+                chosen === undefined
+                  ? "border-white/10"
+                  : isCorrect
+                  ? "border-emerald-500/30"
+                  : "border-rose-500/30"
+              }">
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span class="text-xs font-extrabold text-purple-300">Q${idx + 1}. [${q.tag}]</span>
+                  ${statusBadge}
+                </div>
+                <p class="text-sm font-bold text-white mb-3">${q.question}</p>
+                <div class="space-y-1.5 text-xs mb-3">
+                  ${q.options
+                    .map((opt, oIdx) => {
+                      let style = "px-3 py-2 rounded-xl border border-white/5 text-gray-400";
+                      if (oIdx === q.answer) {
+                        style = "px-3 py-2 rounded-xl border border-emerald-500/60 bg-emerald-500/15 text-emerald-200 font-bold";
+                      } else if (oIdx === chosen && !isCorrect) {
+                        style = "px-3 py-2 rounded-xl border border-rose-500/60 bg-rose-500/15 text-rose-200";
+                      }
+                      return `<div class="${style}">${opt}</div>`;
+                    })
+                    .join("")}
+                </div>
+                <p class="text-xs text-purple-200/90 bg-purple-950/40 p-3 rounded-xl border border-purple-500/20">
+                  <strong class="text-purple-300">Rule:</strong> ${q.explanation}
+                </p>
+              </div>
+            `;
+          })
+          .join("");
+
+        container.innerHTML = `
+          <div class="glass-panel rounded-3xl p-6 sm:p-8 mb-6 border-purple-500/35 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
+              <div>
+                <span class="text-xs font-extrabold uppercase tracking-wider text-purple-400">Exam Completed</span>
+                <h2 class="text-2xl font-extrabold text-white mt-0.5">Performance Breakdown</h2>
+              </div>
+              <button
+                onclick="startExam()"
+                class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-extrabold text-white shadow-lg shadow-purple-600/25 transition-all"
+              >
+                Take Another Mock Test
+              </button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+              <div class="bg-[#111118] border border-purple-500/30 p-4 rounded-2xl">
+                <div class="text-2xl font-extrabold text-purple-400">${netScore} <span class="text-xs text-gray-500">/ 20</span></div>
+                <div class="text-xs text-gray-400 font-semibold mt-1">Net Score</div>
+              </div>
+              <div class="bg-[#111118] border border-emerald-500/25 p-4 rounded-2xl">
+                <div class="text-2xl font-extrabold text-emerald-400">${correct}</div>
+                <div class="text-xs text-gray-400 font-semibold mt-1">Correct (+${correct})</div>
+              </div>
+              <div class="bg-[#111118] border border-rose-500/25 p-4 rounded-2xl">
+                <div class="text-2xl font-extrabold text-rose-400">${wrong}</div>
+                <div class="text-xs text-gray-400 font-semibold mt-1">Wrong (-${penalty.toFixed(2)})</div>
+              </div>
+              <div class="bg-[#111118] border border-white/10 p-4 rounded-2xl">
+                <div class="text-2xl font-extrabold text-gray-300">${skipped}</div>
+                <div class="text-xs text-gray-400 font-semibold mt-1">Unanswered</div>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="text-sm font-extrabold uppercase tracking-wider text-gray-400 mb-3">Detailed Answer Sheet</h3>
+          <div class="space-y-4">
+            ${reviewCards}
+          </div>
+        `;
+        return;
+      }
+
+      // Active Exam In-Progress Screen
+      const answeredCount = Object.keys(state.exam.answers).length;
+      const examQuestionsHTML = state.exam.questions
+        .map((q, idx) => {
+          const selectedOpt = state.exam.answers[idx];
+          return `
+            <div class="glass-panel rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 rounded-lg bg-purple-600/20 text-purple-300 text-xs font-extrabold">
+                  Question ${idx + 1} of 20
+                </span>
+                <span class="text-[11px] text-gray-400 font-semibold">[${q.tag}]</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-white mb-4">${q.question}</h3>
+              <div class="grid grid-cols-1 gap-2">
+                ${q.options
+                  .map((opt, oIdx) => {
+                    const isPicked = selectedOpt === oIdx;
+                    return `
+                      <button
+                        type="button"
+                        onclick="selectExamOption(${idx}, ${oIdx})"
+                        class="option-btn w-full text-left px-4 py-3 rounded-xl border text-xs sm:text-sm font-medium flex items-center justify-between ${
+                          isPicked
+                            ? "bg-purple-600/25 border-purple-500 text-white font-bold"
+                            : "bg-[#111118]/90 border-white/10 text-gray-300"
+                        }"
+                      >
+                        <span>${opt}</span>
+                        <span class="w-4 h-4 rounded-full border flex items-center justify-center ${
+                          isPicked ? "border-purple-400 bg-purple-500" : "border-gray-600"
+                        }">
+                          ${isPicked ? '<span class="w-1.5 h-1.5 rounded-full bg-white"></span>' : ""}
+                        </span>
+                      </button>
+                    `;
+                  })
+                  .join("")}
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      container.innerHTML = `
+        <!-- Sticky Exam Control Bar -->
+        <div class="sticky top-[74px] sm:top-[68px] z-20 glass-panel rounded-2xl p-3.5 mb-5 flex items-center justify-between gap-3 border-purple-500/40 shadow-xl">
+          <div class="flex items-center gap-3">
+            <div class="px-3 py-1.5 rounded-xl bg-[#0a0a0f] border border-purple-500/30 font-mono text-sm sm:text-base font-extrabold text-purple-300" id="examTimerDisplay">
+              ${formatTime(state.exam.timeLeft)}
+            </div>
+            <div class="text-xs font-semibold text-gray-300">
+              Answered: <span class="text-white font-extrabold">${answeredCount}/20</span>
+            </div>
+          </div>
+
+          <button
+            onclick="confirmExamSubmission()"
+            class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-600/20 transition-all"
+          >
+            Submit Exam
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          ${examQuestionsHTML}
+        </div>
+      `;
+    }
+
+    function confirmExamSubmission() {
+      const answeredCount = Object.keys(state.exam.answers).length;
+      showConfirm(
+        "Submit Mock Exam?",
+        `You have answered ${answeredCount} out of 20 questions. Are you ready to view your final score?`,
+        () => submitExam(false)
+      );
+    }
+
+    /**
+     * =========================================================================
+     * VIEW 3: BOOKMARKS & MISTAKE REVIEW TAB
+     * =========================================================================
+     */
+    function renderReviewMode() {
+      const container = document.getElementById("appContainer");
+      const reviewIds = Array.from(new Set([...state.mistakes, ...state.bookmarks]));
+      const reviewQuestions = QUESTIONS_DB.filter((q) => reviewIds.includes(q.id));
+
+      if (reviewQuestions.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel rounded-3xl p-10 text-center max-w-lg mx-auto animate-fade-in">
+            <div class="w-12 h-12 rounded-2xl bg-purple-600/20 text-purple-300 flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+            </div>
+            <h2 class="text-lg font-extrabold text-white mb-1">Your Revision Deck is Empty</h2>
+            <p class="text-xs text-gray-400 leading-relaxed mb-5">
+              Any question you get wrong or bookmark while practicing will automatically appear here for focused revision.
+            </p>
+            <button onclick="switchMode('practice')" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition-colors">
+              Go to Practice Mode
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const cardsHTML = reviewQuestions.map((q, idx) => buildQuestionCardHTML(q, idx + 1)).join("");
+
+      container.innerHTML = `
+        <div class="glass-panel rounded-2xl p-4 mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-sm font-extrabold text-white">Saved &amp; Mistake Review (${reviewQuestions.length})</h2>
+            <p class="text-xs text-gray-400">
+              ${state.mistakes.length} Mistake(s) • ${state.bookmarks.length} Bookmarked
+            </p>
+          </div>
+          <button
+            onclick="clearMistakesList()"
+            class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-bold transition-colors self-start sm:self-auto"
+          >
+            Clear Mistake History
+          </button>
+        </div>
+        <div class="space-y-4">
+          ${cardsHTML}
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * VIEW 4: GRAMMAR CHEAT-SHEET TAB
+     * =========================================================================
+     */
+    function renderRulesMode() {
+      const container = document.getElementById("appContainer");
+
+      const sectionsHTML = GRAMMAR_RULES.map(
+        (cat) => `
+          <section class="glass-panel rounded-2xl p-5 sm:p-6 animate-fade-in">
+            <div class="flex items-center justify-between gap-2 mb-4 pb-3 border-b border-white/10">
+              <h2 class="text-base sm:text-lg font-extrabold text-white">${cat.category}</h2>
+              <span class="px-2.5 py-1 rounded-lg bg-purple-600/20 border border-purple-500/30 text-purple-300 text-[10px] font-extrabold uppercase tracking-wider">
+                ${cat.badge}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${cat.rules
+                .map(
+                  (r) => `
+                  <div class="bg-[#111118]/90 border border-white/10 hover:border-purple-500/35 rounded-xl p-4 transition-colors">
+                    <h3 class="text-xs sm:text-sm font-bold text-purple-300 mb-1.5">${r.title}</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed mb-2.5">${r.desc}</p>
+                    <div class="text-[11px] bg-purple-950/40 border-l-2 border-purple-500 px-3 py-2 rounded-r-lg text-gray-200 font-medium">
+                      "${r.example}"
+                    </div>
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+          </section>
+        `
+      ).join("");
+
+      container.innerHTML = `
+        <div class="glass-panel rounded-2xl p-5 mb-5 border-purple-500/30">
+          <h2 class="text-base sm:text-lg font-extrabold text-white">RETINA Guide High-Yield Grammar Cheat-Sheet</h2>
+          <p class="text-xs text-gray-400 mt-1">
+            Core grammatical patterns tested repeatedly across DU, BUET, JnU, JU, RU, CU, KU, and BU admission exams.
+          </p>
+        </div>
+        <div class="space-y-5">
+          ${sectionsHTML}
+        </div>
+      `;
+    }
+
+    /**
+     * =========================================================================
+     * EVENT HANDLERS & CONTROLLER ACTIONS
+     * =========================================================================
+     */
+    function handlePracticeAnswer(questionId, selectedOptionIdx) {
+      const q = QUESTIONS_DB.find((item) => item.id === questionId);
+      if (!q) return;
+
+      const isCorrect = selectedOptionIdx === q.answer;
+      state.answered[questionId] = {
+        selected: selectedOptionIdx,
+        isCorrect,
+      };
+
+      if (!isCorrect && !state.mistakes.includes(questionId)) {
+        state.mistakes.push(questionId);
+      }
+
+      saveState();
+      updateHeaderStats();
+      renderCurrentView();
+    }
+
+    function retrySingleQuestion(questionId) {
+      delete state.answered[questionId];
+      saveState();
+      updateHeaderStats();
+      renderCurrentView();
+    }
+
+    function toggleBookmark(questionId) {
+      const idx = state.bookmarks.indexOf(questionId);
+      if (idx === -1) {
+        state.bookmarks.push(questionId);
+        showToast("Question bookmarked for revision");
+      } else {
+        state.bookmarks.splice(idx, 1);
+        showToast("Bookmark removed");
+      }
+      saveState();
+      updateHeaderStats();
+      renderCurrentView();
+    }
+
+    function selectUniversity(uni) {
+      state.selectedUni = uni;
+      state.currentPage = 1;
+      renderUniFilters();
+      renderCurrentView();
+    }
+
+    function changePage(newPage) {
+      state.currentPage = newPage;
+      renderCurrentView();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function clearFilters() {
+      state.selectedUni = "ALL";
+      state.searchQuery = "";
+      state.currentPage = 1;
+      document.getElementById("searchInput").value = "";
+      renderUniFilters();
+      renderCurrentView();
+    }
+
+    function clearMistakesList() {
+      showConfirm(
+        "Clear Mistake History?",
+        "This will remove auto-tracked wrong answers from your review list (bookmarked items will remain).",
+        () => {
+          state.mistakes = [];
+          saveState();
+          updateHeaderStats();
+          renderCurrentView();
+          showToast("Mistake history cleared");
+        }
+      );
+    }
+
+    function switchMode(newMode) {
+      state.mode = newMode;
+      updateModeTabs();
+      renderCurrentView();
+    }
+
+    function renderCurrentView() {
+      if (state.mode === "practice") renderPracticeMode();
+      else if (state.mode === "exam") renderExamMode();
+      else if (state.mode === "review") renderReviewMode();
+      else if (state.mode === "rules") renderRulesMode();
+    }
+
+    // Initialize Listeners & First Render
+    document.addEventListener("DOMContentLoaded", () => {
+      // Mode Tabs
+      document.querySelectorAll(".mode-tab").forEach((btn) => {
+        btn.addEventListener("click", () => switchMode(btn.dataset.mode));
+      });
+
+      // Live Search Input
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("input", (e) => {
+        state.searchQuery = e.target.value;
+        state.currentPage = 1;
+        renderPracticeMode();
+      });
+
+      // Reset Progress Button
+      document.getElementById("resetProgressBtn").addEventListener("click", () => {
+        showConfirm(
+          "Reset All Practice Progress?",
+          "This will clear your answered history and accuracy stats so you can practice fresh.",
+          () => {
+            state.answered = {};
+            saveState();
+            updateHeaderStats();
+            renderCurrentView();
+            showToast("Practice progress reset");
+          }
+        );
+      });
+
+      renderUniFilters();
+      updateModeTabs();
+      updateHeaderStats();
+      renderCurrentView();
+    });
+  </script>
+</body>
+</html>
